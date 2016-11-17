@@ -108,6 +108,8 @@ class Storage
   def replace(new)
     if String === new
       @data.replace(JSON.parse(new))
+    elsif new.nil?
+      @data.replace({})
     else
       @data.replace(new)
     end
