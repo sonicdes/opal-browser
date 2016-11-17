@@ -40,7 +40,17 @@ module Browser
         defined?(`document.evaluate`)
 
       when 'Storage.local'
-        defined?(`window.localStorage`)
+        if defined?(`window.localStorage`)
+          %x{
+            try {
+              window.localStorage.setItem('testKey', '1');
+              window.localStorage.removeItem('testKey');
+              return true;
+            } catch (error) {
+              return false;
+            }
+          }
+        end
 
       when 'Storage.global'
         defined?(`window.globalStorage`)
