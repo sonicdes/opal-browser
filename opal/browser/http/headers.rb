@@ -10,7 +10,7 @@ class Headers
   # @param string [String] the whole HTTP headers response
   # @return [Headers] the parsed headers
   def self.parse(string)
-    self[string.split("\r\n").map { |l| l.split(/\s*:\s*/, 2) }]
+    self[string.split(/\r?\n/).map { |l| l.split(/\s*:\s*/, 2) }]
   end
 
   # Create {Headers} from a hash.
@@ -20,6 +20,7 @@ class Headers
     result = new
 
     hash.each {|name, value|
+      next unless name
       result[name] = value
     }
 
